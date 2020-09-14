@@ -137,14 +137,12 @@ class Lexeme(Entity):
             languagename = language.short
 
         # Create the json with the forms's data
-        data_form = json.dumps(
-            {
-                "representations": {
-                    languagename: {"value": form, "language": languagename}
-                },
-                "grammaticalFeatures": infosGram,
-            }
-        )
+        data_form = json.dumps({
+            "representations": {
+                languagename: {"value": form, "language": languagename}
+            },
+            "grammaticalFeatures": infosGram,
+        })
 
         # send a post to add form to lexeme
         PARAMS = {
