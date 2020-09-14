@@ -8,8 +8,9 @@ from .version import user_agent
 
 
 class WikidataSession:
-    """Wikidata network and authentication session. Needed for everything this
-    framework does.
+    """
+    Wikidata network and authentication session.
+    Needed for everything this framework does.
     """
 
     URL: str = "https://www.wikidata.org/w/api.php"
@@ -17,12 +18,12 @@ class WikidataSession:
     maxlag: int = 5
 
     def __init__(
-        self,
-        username: Optional[str] = None,
-        password: Optional[str] = None,
-        token: Optional[str] = None,
-        auth: Optional[str] = None,
-        user_agent: str = user_agent,
+            self,
+            username: Optional[str] = None,
+            password: Optional[str] = None,
+            token: Optional[str] = None,
+            auth: Optional[str] = None,
+            user_agent: str = user_agent,
     ):
         """
         Create a wikidata session by login in and getting the token
@@ -54,8 +55,8 @@ class WikidataSession:
             "type": "login",
             "format": "json",
         }
-        DATA = self.get(PARAMS_1)
-        LOGIN_TOKEN = DATA["query"]["tokens"]["logintoken"]
+        data = self.get(PARAMS_1)
+        LOGIN_TOKEN = data["query"]["tokens"]["logintoken"]
 
         # connexion request
         PARAMS_2 = {
@@ -65,14 +66,18 @@ class WikidataSession:
             "format": "json",
             "lgtoken": LOGIN_TOKEN,
         }
-        DATA = self.post(PARAMS_2)
-        if DATA.get("login", []).get("result") != "Success":
-            raise PermissionError("Login failed", DATA["login"]["reason"])
+        data = self.post(PARAMS_2)
+        if data.get("login", []).get("result") != "Success":
+            raise PermissionError("Login failed", data["login"]["reason"])
         logging.info("Log in succeeded")
 
-        PARAMS_3 = {"action": "query", "meta": "tokens", "format": "json"}
-        DATA = self.get(PARAMS_3)
-        self.CSRF_TOKEN = DATA["query"]["tokens"]["csrftoken"]
+        PARAMS_3 = {
+            "action": "query",
+            "meta": "tokens",
+            "format": "json"
+        }
+        data = self.get(PARAMS_3)
+        self.CSRF_TOKEN = data["query"]["tokens"]["csrftoken"]
         logging.info("Got CSRF token: %s", self.CSRF_TOKEN)
 
     def post(self, data: Dict[str, str]) -> Any:

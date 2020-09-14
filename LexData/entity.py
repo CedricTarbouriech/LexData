@@ -23,7 +23,7 @@ class Entity(dict):
 
         :rtype: Dict[str, List[Claim]]
         """
-        if self.get("claims", {}) != []:
+        if self.get("claims", {}):
             return {k: [Claim(c) for c in v] for k, v in self.get("claims", {}).items()}
         else:
             return {}

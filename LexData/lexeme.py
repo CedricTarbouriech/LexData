@@ -26,7 +26,11 @@ class Lexeme(Entity):
 
         """
 
-        PARAMS = {"action": "wbgetentities", "format": "json", "ids": idLex}
+        PARAMS = {
+            "action": "wbgetentities",
+            "format": "json",
+            "ids": idLex
+        }
 
         DATA = self.repo.get(PARAMS)
 
@@ -69,7 +73,7 @@ class Lexeme(Entity):
         return [Sense(self.repo, s) for s in super().get("senses", [])]
 
     def createSense(
-        self, glosses: Dict[str, str], claims: Optional[List[Claim]] = None
+            self, glosses: Dict[str, str], claims: Optional[List[Claim]] = None
     ) -> str:
         """Create a sense for the lexeme.
 
@@ -107,11 +111,11 @@ class Lexeme(Entity):
         return idSense
 
     def createForm(
-        self,
-        form: str,
-        infosGram: List[str],
-        language: Optional[Language] = None,
-        claims: Optional[List[Claim]] = None,
+            self,
+            form: str,
+            infosGram: List[str],
+            language: Optional[Language] = None,
+            claims: Optional[List[Claim]] = None,
     ) -> str:
         """Create a form for the lexeme.
 
